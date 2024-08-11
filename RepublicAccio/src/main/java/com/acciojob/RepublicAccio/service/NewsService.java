@@ -1,5 +1,6 @@
 package com.acciojob.RepublicAccio.service;
 
+import com.acciojob.RepublicAccio.Response.NewsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,10 +14,10 @@ public class NewsService {
     String baseUrl = "https://newsapi.org/v2/top-headlines";
     String url1 = "http://localhost:9999/person";
 
-    public Object getNews(String countryCode,
-                          String apiKey) {
+    public NewsResponse getNews(String countryCode,
+                                String apiKey) {
         String url = prepareUrl(countryCode,apiKey);
-        return restTemplate.getForObject(url, Object.class);
+        return restTemplate.getForObject(url, NewsResponse.class);
 
     }
 

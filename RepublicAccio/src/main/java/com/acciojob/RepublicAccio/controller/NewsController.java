@@ -1,5 +1,6 @@
 package com.acciojob.RepublicAccio.controller;
 
+import com.acciojob.RepublicAccio.Response.NewsResponse;
 import com.acciojob.RepublicAccio.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ public class NewsController {
     NewsService newsService;
 
     @GetMapping
-    public Object getNews(@RequestParam("countryCode") String countryCode,
-                                         @RequestParam("apiKey") String apiKey) {
+    public NewsResponse getNews(@RequestParam("countryCode") String countryCode,
+                                @RequestParam("apiKey") String apiKey) {
         return newsService.getNews(countryCode,apiKey);
     }
 }
