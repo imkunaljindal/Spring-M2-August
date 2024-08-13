@@ -1,10 +1,8 @@
 package com.example.CabXpress.model;
 
 import com.example.CabXpress.Enum.BookingStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,4 +39,14 @@ public class Booking {
     double totalDistance;
 
     BookingStatus status;
+
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore
+    Customer customer;
+
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore
+    Driver driver;
 }

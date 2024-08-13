@@ -1,10 +1,8 @@
 package com.example.CabXpress.model;
 
 import com.example.CabXpress.Enum.CabType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -29,4 +27,9 @@ public class Cab {
     double farePerKm;
 
     boolean available;
+
+    @OneToOne
+    @JoinColumn
+    @JsonIgnore
+    Driver driver;
 }
