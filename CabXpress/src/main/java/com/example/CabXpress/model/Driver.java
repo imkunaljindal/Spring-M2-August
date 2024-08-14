@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Driver {
 
     @Id
@@ -24,6 +25,7 @@ public class Driver {
 
     int age;
 
+    @Column(unique = true)
     long mobNo;
 
     @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
