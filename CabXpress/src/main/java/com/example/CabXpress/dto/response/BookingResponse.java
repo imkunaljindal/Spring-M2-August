@@ -1,8 +1,6 @@
-package com.example.CabXpress.model;
+package com.example.CabXpress.dto.response;
 
 import com.example.CabXpress.Enum.BookingStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,40 +12,22 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class Booking {
+public class BookingResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
-    String bookingId; // UUID
-
+    String bookingId;
     String pickUp;
-
     String destination;
-
-    @CreationTimestamp
     Date bookedAt;  // both date and time - Util
-
-    @UpdateTimestamp
     Date updatedAt;
-
     double totalFare;
-
     double totalDistance;
-
     BookingStatus status;
 
-    @ManyToOne
-    @JoinColumn
-    @JsonIgnore
-    Customer customer;
+    CustomerResponse customer;
 
-    @ManyToOne
-    @JoinColumn
-    @JsonIgnore
-    Driver driver;
+    CabResponse cab;
+
+    DriverResponse driver;
 }
