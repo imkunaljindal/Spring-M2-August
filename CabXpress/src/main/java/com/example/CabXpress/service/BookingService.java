@@ -15,6 +15,8 @@ import com.example.CabXpress.repository.CustomerRepository;
 import com.example.CabXpress.repository.DriverRepository;
 import com.example.CabXpress.transformer.BookingTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -32,6 +34,9 @@ public class BookingService {
 
     @Autowired
     DriverRepository driverRepository;
+
+    @Autowired
+    JavaMailSender javaMailSender;
 
     public BookingResponse bookCab(BookingRequest bookingRequest) {
         Customer customer = customerRepository.findByEmailId(bookingRequest.getCustomerEmail());
@@ -58,6 +63,20 @@ public class BookingService {
         customerRepository.save(customer); // cust + booking
         driverRepository.save(driver); // driver + booking + cab
 
+        sendMail(savedBooking);
         return BookingTransformer.bookingToBookingResponse(savedBooking);
+    }
+
+    private void sendMail(Booking savedBooking) {
+        String text = "Hi! " + savedBooking.getCustomer().getName() + " your booking is confirmed. " +
+                "The booking ID is: " + savedBooking.getBookingId();
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("acciojobspring@gmail.com");
+        simpleMailMessage.setTo(savedBooking.getCustomer().getEmailId());
+        simpleMailMessage.setSubject("Cab Booked !!");
+        simpleMailMessage.setText(text);
+
+        javaMailSender.send(simpleMailMessage);
     }
 }
